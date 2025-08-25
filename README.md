@@ -36,7 +36,6 @@ It is recommended to add the `paths:` section into the workflow file,
 as it would effectively speed up the CI pipeline, since the audit process
 will not be performed if no dependencies were changed.
 
-
 In case of any security advisories found, [status check](https://help.github.com/en/articles/about-status-checks)
 created by this Action will be marked as "failed".\
 Note that informational advisories are not affecting the check status.
@@ -107,3 +106,23 @@ For each new advisory (including informal) an issue will be created:
 | `working-directory`|   | The directory of the Cargo.toml / Cargo.lock files to scan.                | string | `.`     |
 
 [GitHub token]: https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token
+
+## Contribute
+
+### Setting up npm login
+
+This repo uses some npm packages hosted on github.
+To be able to pull these you need to:
+
+1. Under <https://github.com/settings/tokens> - create a `personal access token (classic)` with `read:packages` scope
+
+2. Authenticate to the github npm registry
+
+```sh
+npm login --scope=@clechasseur --auth-type=legacy --registry=https://npm.pkg.github.com
+```
+
+```txt
+Username = Github Username
+Password = Token
+```
