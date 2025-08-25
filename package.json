@@ -18,7 +18,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/actions-rs/audit.git"
+        "url": "github:rustsec/audit-check"
     },
     "keywords": [
         "actions",
@@ -31,7 +31,7 @@
     "author": "actions-rs",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/actions-rs/audit-check/issues"
+        "url": "https://github.com/rustsec/audit-check/issues"
     },
     "dependencies": {
         "@clechasseur/rs-actions-core": "^3.0.5",
