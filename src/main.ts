@@ -1,5 +1,5 @@
-import * as process from 'process';
 import * as os from 'os';
+import * as process from 'process';
 
 import * as core from '@actions/core';
 import * as github from '@actions/github';
@@ -90,7 +90,10 @@ export async function run(actionInput: input.Input): Promise<void> {
 
     // const octokit = github.getOctokit(actionInput.token, {userAgent: USER_AGENT});
     const advisories = report.vulnerabilities.list;
-    if (github.context.eventName == 'schedule') {
+    if (
+        github.context.eventName == 'schedule' ||
+        github.context.eventName == 'workflow_dispatch'
+    ) {
         core.debug(
             'Action was triggered on a schedule event, creating an Issues report',
         );
