@@ -59,7 +59,7 @@ github-token:
     checks-reason: to create check
 ```
 
-The action does not raise issues when it is not triggered from a "cron" scheduled workflow.
+This action only raises issues when it's triggered from a `cron` scheduled workflow or on manual `workflow_dispatch`
 
 When running the action as scheduled it will crate issues but e.g. in PR / push fails the action.
 
