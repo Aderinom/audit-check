@@ -54,6 +54,7 @@ function removeTrailingSlash(str) {
 }
 
 export async function run(actionInput: input.Input): Promise<void> {
+    const labels = actionInput.new_issue_labels;
     const ignore = actionInput.ignore;
     const workingDirectory = removeTrailingSlash(actionInput.workingDirectory);
     const report = await getData(ignore, workingDirectory);
@@ -97,7 +98,12 @@ export async function run(actionInput: input.Input): Promise<void> {
         core.debug(
             'Action was triggered on a schedule event, creating an Issues report',
         );
-        await reporter.reportIssues(actionInput.token, advisories, warnings);
+        await reporter.reportIssues(
+            actionInput.token,
+            advisories,
+            warnings,
+            labels,
+        );
     } else {
         core.debug(
             `Action was triggered on a ${github.context.eventName} event, creating a Check report`,

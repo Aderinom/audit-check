@@ -166,7 +166,7 @@ export async function reportCheck(
     vulnerabilities: Array<interfaces.Vulnerability>,
     warnings: Array<interfaces.Warning>,
 ): Promise<void> {
-    const client = github.getOctokit(token, {userAgent: USER_AGENT});
+    const client = github.getOctokit(token, { userAgent: USER_AGENT });
     const reporter = new checks.CheckReporter(client.rest, 'Security audit');
     const stats = getStats(vulnerabilities, warnings);
     const summary = getSummary(stats);
@@ -235,7 +235,7 @@ async function alreadyReported(
     advisoryId: string,
 ): Promise<boolean> {
     const { owner, repo } = github.context.repo;
-    const client = github.getOctokit(token, {userAgent: USER_AGENT});
+    const client = github.getOctokit(token, { userAgent: USER_AGENT });
     const results = await client.rest.search.issuesAndPullRequests({
         q: `${advisoryId} in:title repo:${owner}/${repo}`,
         per_page: 1, // eslint-disable-line @typescript-eslint/camelcase
@@ -256,10 +256,11 @@ export async function reportIssues(
     token: string,
     vulnerabilities: Array<interfaces.Vulnerability>,
     warnings: Array<interfaces.Warning>,
+    labels: string[],
 ): Promise<void> {
     const { owner, repo } = github.context.repo;
 
-    const client = github.getOctokit(token, {userAgent: USER_AGENT});
+    const client = github.getOctokit(token, { userAgent: USER_AGENT });
 
     for (const vulnerability of vulnerabilities) {
         const reported = await alreadyReported(
@@ -278,6 +279,7 @@ export async function reportIssues(
             repo: repo,
             title: `${vulnerability.advisory.id}: ${vulnerability.advisory.title}`,
             body: body,
+            labels,
         });
         core.info(
             `Created an issue for ${vulnerability.advisory.id}: ${issue.data.html_url}`,
